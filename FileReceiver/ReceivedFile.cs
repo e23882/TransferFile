@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileReceiver
+﻿namespace FileReceiver
 {
     public class ReceivedFile
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string Time { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public string FileName { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public string SizeKB { get; set; }
     }
 }

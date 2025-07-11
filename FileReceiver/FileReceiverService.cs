@@ -1,22 +1,27 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FileReceiver
 {
     public class FileReceiverService
     {
+        #region Fields
         private int _port;
         private string _savePath;
         private TcpListener _listener;
         private CancellationTokenSource _cts;
-
         public event EventHandler<ReceivedFile> FileReceived;
+        private readonly object _pathLock = new object();
+        #endregion
 
+        #region MemberFunction
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="savePath"></param>
         public FileReceiverService(int port, string savePath)
         {
             _port = port;
@@ -26,7 +31,10 @@ namespace FileReceiver
                 Directory.CreateDirectory(_savePath);
         }
 
-        private readonly object _pathLock = new object();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newPath"></param>
         public void SetSavePath(string newPath)
         {
             lock (_pathLock)
@@ -37,6 +45,9 @@ namespace FileReceiver
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Start()
         {
             _cts = new CancellationTokenSource();
@@ -46,12 +57,20 @@ namespace FileReceiver
             Task.Run(() => AcceptLoop(_cts.Token));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Stop()
         {
             _cts?.Cancel();
             _listener?.Stop();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private async Task AcceptLoop(CancellationToken token)
         {
             while (!token.IsCancellationRequested)
@@ -68,6 +87,10 @@ namespace FileReceiver
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
         private void HandleClient(TcpClient client)
         {
             using (client)
@@ -99,5 +122,6 @@ namespace FileReceiver
                 }
             }
         }
+        #endregion
     }
 }
