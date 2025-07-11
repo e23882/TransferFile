@@ -1,0 +1,22 @@
+# 編譯輸出
+bin/
+obj/
+Debug/
+Release/
+*.exe
+*.dll
+*.pdb
+
+# 使用者設定檔
+*.user
+*.suo
+*.vs/
+
+# NuGet 資料夾
+packages/
+*.nupkg
+*.snupkg
+
+# Rider / ReSharper 檔案
+.idea/
+*.sln.docstates

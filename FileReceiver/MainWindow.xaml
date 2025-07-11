@@ -1,0 +1,93 @@
+﻿<Window
+    x:Class="FileReceiver.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="檔案接收器"
+    Width="600"
+    Height="450"
+    AllowsTransparency="True"
+    MouseLeftButtonDown="MainGrid_MouseLeftButtonDown"
+    ShowInTaskbar="False"
+    Topmost="True"
+    WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="./receiver.jpg" Stretch="UniformToFill" />
+    </Window.Background>
+    <StackPanel Margin="10">
+        <StackPanel
+            Margin="0,20,0,0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="0,0,5,0"
+                VerticalAlignment="Center"
+                Text="透明度：" />
+            <Slider
+                x:Name="OpacitySlider"
+                Width="200"
+                IsSnapToTickEnabled="True"
+                Maximum="1.0"
+                Minimum="0.1"
+                TickFrequency="0.1"
+                ValueChanged="OpacitySlider_ValueChanged"
+                Value="1.0" />
+            <TextBlock
+                x:Name="OpacityValueText"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Text="100%" />
+        </StackPanel>
+        <StackPanel>
+            <TextBlock FontWeight="Bold" Text="儲存路徑：" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox
+                    x:Name="SavePathBox"
+                    Width="400"
+                    Margin="0,0,10,0"
+                    Text="C:\ReceivedFiles" />
+                <Button
+                    Width="60"
+                    Click="ChooseFolder_Click"
+                    Content="選擇" />
+            </StackPanel>
+            <ListView
+                x:Name="FileListView"
+                Height="250"
+                Background="Transparent">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Width="100"
+                            DisplayMemberBinding="{Binding Time}"
+                            Header="時間" />
+                        <GridViewColumn
+                            Width="250"
+                            DisplayMemberBinding="{Binding FileName}"
+                            Header="檔名" />
+                        <GridViewColumn
+                            Width="100"
+                            DisplayMemberBinding="{Binding SizeKB}"
+                            Header="大小 (KB)" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock
+                Margin="0,10,0,0"
+                FontWeight="Bold"
+                Text="接收狀態：" />
+            <TextBlock
+                x:Name="StatusText"
+                Margin="0,0,0,10"
+                Text="尚未開始接收..." />
+
+            <!--  其餘不變  -->
+        </StackPanel>
+        <Button
+            Margin="0,20,0,0"
+            Padding="10,10"
+            Background="Transparent"
+            BorderBrush="LightGray"
+            Click="Button_Click"
+            Content="Close" />
+    </StackPanel>
+</Window>
